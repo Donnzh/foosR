@@ -1,0 +1,7 @@
+.Player-list__item {
+  padding: 8px;
+  &:hover {
+    cursor: pointer;
+    background: white !important;
+  };
+}
