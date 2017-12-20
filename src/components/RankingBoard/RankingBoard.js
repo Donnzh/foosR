@@ -49,6 +49,7 @@ export default class RankingBoard extends Component {
                     </TabPane>
                     <TabPane tab={<span><Icon type="dot-chart" />Player Ranking</span>} key="1">
                         <PlayerRanking
+                            gameResults={gameResults}
                             selectedPlayer={selectedPlayer}
                             players={players} />
                     </TabPane>

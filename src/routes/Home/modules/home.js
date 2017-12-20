@@ -38,7 +38,7 @@ export const INIT_FOOSRANKING_STATE = {
             resultId: 0,
             team1: ['Tony Spredeman'],
             team2: ['Loffredo Todd'],
-            time: moment(new Date(2011, 9, 16)).format('LLLL'),
+            time: moment(new Date(2017, 9, 16)).format('LLLL'),
             winner: 1
         },
         {
@@ -115,16 +115,12 @@ const ACTION_HANDLERS = {
     [COUNTER_INCREMENT]: (state, action) => Object.assign({}, state, {
         integer: action.payload
     }),
-    // [COUNTER_DOUBLE_ASYNC] : (state, action) => state * 2,
     [ADD_NEW_PLAYER]: (state, action) => Object.assign({}, state, {
         players: [...state.players, action.payload],
     }),
     [SELECT_PLAYER]: (state, action) => Object.assign({}, state, {
         selectedPlayer: action.payload
     }),
-    // [ADD_GAME_RESULT]: (state, action) => Object.assign({}, state, {
-    //     gameResults: action.payload
-    // }),
     [ADD_GAME_RESULT]: (state, action) => {
         let result = {
             ...state,

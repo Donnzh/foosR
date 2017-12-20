@@ -2,39 +2,98 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {
     Icon,
-    Card
+    Card,
+    Select,
+    Row,
+    Col
 } from 'antd'
 import _filter from 'lodash/filter'
 import CountUp from 'react-countup'
+const Option = Select.Option;
 
 export default class PlayerRanking extends Component {
     static propTypes = {
         players: PropTypes.array.isRequired,
         selectedPlayer: PropTypes.string,
+        gameResults: PropTypes.array
     }
 
     constructor (props) {
         super(props)
         this.state = {
             playerInfo: null,
+            comparedPlayer: null
         }
     }
-    componentDidMount() {
+
+    componentDidMount () {
         this.setState({
-            playerInfo: this.getPlayerInfo(),
+            playerInfo: this.getPlayerInfo(this.props.selectedPlayer),
             selectedPlayer: this.props.selectedPlayer
         })
     }
-    componentDidUpdate(prevProps, prevState) {
+
+    componentDidUpdate (prevProps, prevState) {
         if (prevProps.selectedPlayer !== this.props.selectedPlayer) {
             this.setState({
-                playerInfo: this.getPlayerInfo(),
+                playerInfo: this.getPlayerInfo(this.props.selectedPlayer),
                 selectedPlayer: this.props.selectedPlayer
             })
         }
     }
+    getPlayerInfo = (name) => _filter(this.props.players, {'name': name})[0]
 
-    getPlayerInfo = () => _filter(this.props.players, {'name': this.props.selectedPlayer})[0]
+    renderPlayerInfoCard = (name, won, lose) => {
+        return <Card title={name} bordered={false} style={{width: 300}}>
+            <p>Won: {won} </p>
+            <p>Lose: {lose} </p>
+            <p>Won/Lose Ratio: {this.getCountUpAnimation((won / (won + lose)).toPrecision(3), 2)}
+            </p>
+        </Card>
+    }
+
+    selectHandler = (e) => {
+        e? this.setState({ comparedPlayer: e }) : null
+    }
+    renderCompareCard = () => {
+        if(this.state.comparedPlayer){
+            let {name, won, lose } = this.getPlayerInfo(this.state.comparedPlayer)
+            return this.renderPlayerInfoCard(name, won, lose)
+        }
+    }
+    renderCompareResulte = () => {
+        let totalPlayedTime = 0
+        let wonTimes = 0
+        let loseTimes = 0
+        let selectPlayer = this.state.selectedPlayer
+        let comparedPlayer = this.state.comparedPlayer
+        let allResults = this.props.gameResults
+
+        let team1Data = allResults.map( (r, i) => {
+            if(r.team1.includes(selectPlayer) && r.team2.includes(comparedPlayer)) {
+                totalPlayedTime++
+                if (r.winner === 1) {
+                    wonTimes++
+                } else {
+                    loseTimes++
+                }
+            } else if (r.team2.includes(selectPlayer) && r.team1.includes(comparedPlayer)) {
+                    totalPlayedTime ++
+                    if(r.winner === 1) {
+                        loseTimes ++
+                }else {
+                        wonTimes ++
+                    }
+                }
+            })
+        return <div>
+            <h3> Total Played: {this.getCountUpAnimation(totalPlayedTime, 0)}times</h3>
+            <h4>Won: {this.getCountUpAnimation(wonTimes, 0)} time</h4>
+            <h4>lost: {this.getCountUpAnimation(loseTimes, 0)} time</h4>
+        </div>
+    }
+
+    getCountUpAnimation = (e, decimals)=> <CountUp start={0} useEasing duration={0.6} decimals={decimals} end={e}/>
 
     render () {
         if (this.state.playerInfo) {
@@ -43,19 +102,35 @@ export default class PlayerRanking extends Component {
                 won,
                 lose
             } = this.state.playerInfo
+            const Options = this.props.players.map((p, i) =>
+                <Option key={i} lable={p.name} value={'' + p.name}>{p.name}  </Option>
+            )
+            const colStyle = {display: 'flex', justifyContent: 'center'}
             return <div style={{background: '#ECECEC', padding: '30px'}}>
-                <Card title={name} bordered={false} style={{width: 300}}>
-                    <p>Won: {won} </p>
-                    <p>Lose: {lose} </p>
-                    <p>Won/Lose Ratio:
-                        <CountUp
-                            start={0}
-                            useEasing
-                            duration={0.6}
-                            decimals={2}
-                            end={(won / (won + lose)).toPrecision(3)} />
-                        </p>
-                </Card>
+                <Row type="flex" justify="center">
+                    <Col style={colStyle} span={8}>
+                        {this.renderPlayerInfoCard(name, won, lose)}
+                    </Col>
+                    <Col style={colStyle} span={4}>
+                        <div  style={{width: '150px'}}>
+                            <Select
+                                showSearch
+                                style={{width: '100%'}}
+                                placeholder="Comppare with"
+                                onChange={(e) => this.selectHandler(e, 1)}>
+                                {Options}
+                            </Select>
+                            <div>
+                                <br/>
+                                {this.state.comparedPlayer && this.state.comparedPlayer !== this.state.selectedPlayer
+                                    ? this.renderCompareResulte(): null}
+                            </div>
+                        </div>
+                    </Col>
+                    <Col style={colStyle} span={8}>
+                        {this.state.comparedPlayer? this.renderCompareCard() : null }
+                    </Col>
+                </Row>
             </div>
         } else {
             return null
