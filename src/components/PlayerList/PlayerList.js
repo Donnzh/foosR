@@ -9,7 +9,6 @@ import {
     Tabs,
     Icon
 } from 'antd'
-import './PlayerList.scss'
 const TabPane = Tabs.TabPane;
 
 export default class PlayerList extends Component {
