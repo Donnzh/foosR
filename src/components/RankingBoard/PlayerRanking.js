@@ -159,7 +159,7 @@ export default class PlayerRanking extends Component {
                         {this.renderPlayerInfoCard(name, won, lose)}
                     </Col>
                     <Col style={colStyle} span={4}>
-                        <div style={{width: '150px'}}>
+                        <div style={{width: '100%'}}>
                             <Select
                                 showSearch
                                 style={{width: '100%'}}
