@@ -122,6 +122,11 @@ export default class RankingBoard extends Component {
                 })
             })
             message.success('Result Updated');
+            this.setState({
+                team1: [],
+                team2: [],
+                winner: null
+            })
         }
     }
 
@@ -148,6 +153,7 @@ export default class RankingBoard extends Component {
                 <Row type="flex" justify="center">
                     <Col md={8} sm={18} xs={18}>
                         <Select
+                            value={this.state.team1}
                             mode="multiple"
                             style={{width: '100%'}}
                             placeholder="Tags Mode"
@@ -160,6 +166,7 @@ export default class RankingBoard extends Component {
                     </Col>
                     <Col md={8} sm={18} xs={18}>
                         <Select
+                            value={this.state.team2}
                             mode="multiple"
                             style={{width: '100%'}}
                             placeholder="Tags Mode"

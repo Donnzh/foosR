@@ -51,6 +51,9 @@ export default class PlayerList extends Component {
             lose: 0
         })
         message.success('Player Added');
+        this.setState({
+            playerName: ''
+        })
     }
     inputChangeHandler = (e) => {
         this.setState({
