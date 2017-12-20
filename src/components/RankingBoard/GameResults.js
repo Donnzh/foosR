@@ -47,7 +47,7 @@ export default class RankingBoard extends Component {
     }
     renderGameResultsList = () => {
         return this.props.gameResults.map((r, i) => {
-                return <Tooltip placement="top" style={{fontSize: '12px'}} title={r.time}>
+                return <Tooltip key={i} placement="top" style={{fontSize: '12px'}} title={r.time}>
                     <Row className="Game-result__listitem" type="flex" justify="center">
                         <Col span={6}>
                             <span> {r.winner === 1 ? <Icon type="like"/> : '' } {r.team1.join(', ')} </span>
@@ -58,7 +58,6 @@ export default class RankingBoard extends Component {
                         </Col>
                     </Row>
                 </Tooltip>
-
             }
         )
     }
@@ -107,7 +106,7 @@ export default class RankingBoard extends Component {
                 team1: this.state.team1,
                 team2: this.state.team2,
                 winner: this.state.winner,
-                time: moment().format('LLLL')
+                time: moment().format('HH:mm, D-MMM-YY')
             })
             // upate player result
             team1.forEach(t => {

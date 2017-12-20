@@ -7,7 +7,8 @@ import {
     Input,
     message,
     Tabs,
-    Icon
+    Icon,
+    Popover
 } from 'antd'
 const TabPane = Tabs.TabPane;
 
@@ -29,14 +30,14 @@ export default class PlayerList extends Component {
         this.props.selectPlayer(name);
     }
     renderPlayersInfo = () => {
-        return this.props.players.map((p) => {
+        return this.props.players.map((p, i) => {
             return <div className="Player-list__item"
-                        key={p.id}
+                        key={i}
                         onClick={() => {
                             this.nameClickHandler(p.name)
                         }}>
                 {p.name}
-            </div>
+                </div>
         })
     }
     addPlayerClickHandler = () => {

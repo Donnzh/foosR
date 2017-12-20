@@ -38,14 +38,14 @@ export const INIT_FOOSRANKING_STATE = {
             resultId: 0,
             team1: ['Tony Spredeman'],
             team2: ['Loffredo Todd'],
-            time: moment(new Date(2017, 9, 16)).format('LLLL'),
+            time: moment(new Date(2017, 9, 16)).format('HH:mm, D-MMM-YY'),
             winner: 1
         },
         {
             resultId: 1,
             team1: ['Loffredo Todd', 'Tony Spredeman'],
             team2: ['Denial Deng'],
-            time: moment().format('LLLL'),
+            time: moment().format('HH:mm, D-MMM-YY'),
             winner: 1
         },
 
