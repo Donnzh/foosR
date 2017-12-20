@@ -63,17 +63,18 @@ export default class PlayerList extends Component {
             players
         } = this.props
         return (
-            <Col span={6}>
+            <Col md={6}
+                 xs={24}>
                 <Tabs >
                     <TabPane tab={<span><Icon type="team"/> Players</span>} key="1">
                         <Row type="flex" justify="center">
-                            <Col span={12}>
+                            <Col md={10} xs={18}>
                                 <Input
                                     onChange={this.inputChangeHandler}
                                     value={this.state.playerName}
                                     placeholder="New Player Name"/>
                             </Col>
-                            <Col span={6}>
+                            <Col md={12} xs={24}>
                                 <Button onClick={ () => this.addPlayerClickHandler()}>New Player</Button>
                             </Col>
                         </Row>

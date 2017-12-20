@@ -146,7 +146,7 @@ export default class RankingBoard extends Component {
         return (
             <div>
                 <Row type="flex" justify="center">
-                    <Col span={8}>
+                    <Col md={8} sm={18} xs={18}>
                         <Select
                             mode="multiple"
                             style={{width: '100%'}}
@@ -155,10 +155,10 @@ export default class RankingBoard extends Component {
                             {Options}
                         </Select>
                     </Col>
-                    <Col span={2}>
+                    <Col md={2} sm={18} xs={18}>
                         <h2>VS</h2>
                     </Col>
-                    <Col span={8}>
+                    <Col md={8} sm={18} xs={18}>
                         <Select
                             mode="multiple"
                             style={{width: '100%'}}
@@ -170,10 +170,10 @@ export default class RankingBoard extends Component {
                 </Row>
 
                 <Row type="flex" justify="center">
-                    <Col span={2}>
+                    <Col md={2} sm={24} xs={24}>
                         <h4>Winner:</h4>
                     </Col>
-                    <Col span={4}>
+                    <Col md={6} sm={24} xs={24}>
                         <RadioGroup onChange={this.radioOnChange} value={this.state.winner}>
                             <Radio value={1}>TEAM1</Radio>
                             <Radio value={2}>TEAM2</Radio>

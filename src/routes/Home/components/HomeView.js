@@ -9,7 +9,7 @@ import {
 import PlayerList from 'components/PlayerList/PlayerList'
 import RankingBoard from 'components/RankingBoard/RankingBoard'
 import './HomeView.scss'
-const {Content} = Layout
+const { Content } = Layout
 
 export default class HomeView extends Component {
     static propTypes = {
@@ -22,7 +22,7 @@ export default class HomeView extends Component {
         addNewPlayer: PropTypes.func,
         updatePlayerResult: PropTypes.func
     };
-    updateGameResult = (data) =>{
+    updateGameResult = (data) => {
         this.props.addGameResult(data)
 
     }
@@ -47,23 +47,23 @@ export default class HomeView extends Component {
             <div>
                 <h3>Welcome! Foosball Rrankings</h3>
                 <br/>
-                    <Layout>
-                        <Row>
-                            <PlayerList
-                                players={players}
-                                selectPlayer={this.updateSelectPlayer}
-                                addNewPlayer={addNewPlayer}
-                            />
-                            <RankingBoard
-                                players={players}
-                                gameResults={gameResults}
-                                updatePlayerResult={this.updatePlayerResult}
-                                addGameResult={this.updateGameResult}
-                                selectedPlayer={selectedPlayer}
-                                increment={increment}
-                            />
-                        </Row>
-                    </Layout>
+                <Layout>
+                    <Row>
+                        <PlayerList
+                            players={players}
+                            selectPlayer={this.updateSelectPlayer}
+                            addNewPlayer={addNewPlayer}
+                        />
+                        <RankingBoard
+                            players={players}
+                            gameResults={gameResults}
+                            updatePlayerResult={this.updatePlayerResult}
+                            addGameResult={this.updateGameResult}
+                            selectedPlayer={selectedPlayer}
+                            increment={increment}
+                        />
+                    </Row>
+                </Layout>
             </div>
         )
     }

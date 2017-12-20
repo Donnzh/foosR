@@ -155,11 +155,11 @@ export default class PlayerRanking extends Component {
             const colStyle = {display: 'flex', justifyContent: 'center'}
             return <div style={{background: '#ECECEC', padding: '30px'}}>
                 <Row type="flex" justify="center">
-                    <Col style={colStyle} span={8}>
+                    <Col style={colStyle} md={8} sm={20}>
                         {this.renderPlayerInfoCard(name, won, lose)}
                     </Col>
-                    <Col style={colStyle} span={4}>
-                        <div style={{width: '100%'}}>
+                    <Col style={colStyle} md={6} sm={10} xs={12}>
+                        <div style={{width: '100%', margin:'20px'}}>
                             <Select
                                 showSearch
                                 style={{width: '100%'}}
@@ -174,7 +174,7 @@ export default class PlayerRanking extends Component {
                             </div>
                         </div>
                     </Col>
-                    <Col style={colStyle} span={8}>
+                    <Col style={colStyle} md={8} sm={20}>
                         {this.state.comparedPlayer ? this.renderCompareCard() : null }
                     </Col>
                 </Row>

@@ -34,7 +34,7 @@ export default class RankingBoard extends Component {
             updatePlayerResult
         } = this.props
         return (
-            <Col span={18} className="">
+            <Col md={18} sm={24} xs={24}>
                 <Tabs defaultActiveKey="2">
                     <TabPane
                         tab={<span><Icon type="rocket"/>Results</span>}
