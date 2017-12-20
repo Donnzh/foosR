@@ -5,10 +5,13 @@ import {
     Card,
     Select,
     Row,
-    Col
+    Col,
+    Popover
 } from 'antd'
 import _filter from 'lodash/filter'
 import CountUp from 'react-countup'
+import {AreaChart} from 'react-easy-chart';
+
 const Option = Select.Option;
 
 export default class PlayerRanking extends Component {
@@ -43,21 +46,65 @@ export default class PlayerRanking extends Component {
     }
     getPlayerInfo = (name) => _filter(this.props.players, {'name': name})[0]
 
+    getPlayerChartData = (name) => {
+        let allResults = this.props.gameResults
+        let winTimes = 0
+        let loseTimes = 0
+        let data = []
+        let playTimes = 0
+        allResults.map( (r) => {
+            if(r.team1.includes(name)) {
+                if(r.winner === 1) {
+                    winTimes++
+                }else {
+                    loseTimes++
+                }
+                playTimes++
+                data.push({x: playTimes, y: winTimes/loseTimes === Infinity? 1 : winTimes/loseTimes  } )
+            } else if (r.team2.includes(name)) {
+                if(r.winner === 1) {
+                    loseTimes++
+                }else {
+                    winTimes++
+                }
+                playTimes++
+                data.push({x: playTimes, y: winTimes/loseTimes === Infinity? 1 : winTimes/loseTimes} )
+            }
+        })
+        return [data]
+    }
+
     renderPlayerInfoCard = (name, won, lose) => {
-        return <Card title={name} bordered={false} style={{width: 300}}>
-            <p>Won: {won} </p>
-            <p>Lose: {lose} </p>
-            <p>Won/Lose Ratio: {this.getCountUpAnimation((won / (won + lose)).toPrecision(3), 2)}
-            </p>
-        </Card>
+        const content = (
+            <div>
+                <AreaChart
+                    axes
+                    xDomainRange={[0, 20]}
+                    yDomainRange={[0, 10]}
+                    verticalGrid
+                    interpolate={'cardinal'}
+                    width={160}
+                    height={160}
+                    data={this.getPlayerChartData(name)}
+                />
+            </div>
+        );
+        return  <Popover content={content} placement="left" trigger="hover">
+            <Card title={name} bordered={false} style={{width: 300}}>
+                <p>Won: {won} </p>
+                <p>Lose: {lose} </p>
+                <p>Won/Lose Ratio: {this.getCountUpAnimation((won / (won + lose)).toPrecision(3), 2)}
+                </p>
+            </Card>
+            </Popover>
     }
 
     selectHandler = (e) => {
-        e? this.setState({ comparedPlayer: e }) : null
+        e ? this.setState({comparedPlayer: e}) : null
     }
     renderCompareCard = () => {
-        if(this.state.comparedPlayer){
-            let {name, won, lose } = this.getPlayerInfo(this.state.comparedPlayer)
+        if (this.state.comparedPlayer) {
+            let {name, won, lose} = this.getPlayerInfo(this.state.comparedPlayer)
             return this.renderPlayerInfoCard(name, won, lose)
         }
     }
@@ -69,8 +116,8 @@ export default class PlayerRanking extends Component {
         let comparedPlayer = this.state.comparedPlayer
         let allResults = this.props.gameResults
 
-        let team1Data = allResults.map( (r, i) => {
-            if(r.team1.includes(selectPlayer) && r.team2.includes(comparedPlayer)) {
+        let team1Data = allResults.map((r, i) => {
+            if (r.team1.includes(selectPlayer) && r.team2.includes(comparedPlayer)) {
                 totalPlayedTime++
                 if (r.winner === 1) {
                     wonTimes++
@@ -78,14 +125,14 @@ export default class PlayerRanking extends Component {
                     loseTimes++
                 }
             } else if (r.team2.includes(selectPlayer) && r.team1.includes(comparedPlayer)) {
-                    totalPlayedTime ++
-                    if(r.winner === 1) {
-                        loseTimes ++
-                }else {
-                        wonTimes ++
-                    }
+                totalPlayedTime++
+                if (r.winner === 1) {
+                    loseTimes++
+                } else {
+                    wonTimes++
                 }
-            })
+            }
+        })
         return <div>
             <h3> Total Played: {this.getCountUpAnimation(totalPlayedTime, 0)}times</h3>
             <h4>Won: {this.getCountUpAnimation(wonTimes, 0)} time</h4>
@@ -93,7 +140,7 @@ export default class PlayerRanking extends Component {
         </div>
     }
 
-    getCountUpAnimation = (e, decimals)=> <CountUp start={0} useEasing duration={0.6} decimals={decimals} end={e}/>
+    getCountUpAnimation = (e, decimals) => <CountUp start={0} useEasing duration={0.6} decimals={decimals} end={e}/>
 
     render () {
         if (this.state.playerInfo) {
@@ -112,7 +159,7 @@ export default class PlayerRanking extends Component {
                         {this.renderPlayerInfoCard(name, won, lose)}
                     </Col>
                     <Col style={colStyle} span={4}>
-                        <div  style={{width: '150px'}}>
+                        <div style={{width: '150px'}}>
                             <Select
                                 showSearch
                                 style={{width: '100%'}}
@@ -123,12 +170,12 @@ export default class PlayerRanking extends Component {
                             <div>
                                 <br/>
                                 {this.state.comparedPlayer && this.state.comparedPlayer !== this.state.selectedPlayer
-                                    ? this.renderCompareResulte(): null}
+                                    ? this.renderCompareResulte() : null}
                             </div>
                         </div>
                     </Col>
                     <Col style={colStyle} span={8}>
-                        {this.state.comparedPlayer? this.renderCompareCard() : null }
+                        {this.state.comparedPlayer ? this.renderCompareCard() : null }
                     </Col>
                 </Row>
             </div>
