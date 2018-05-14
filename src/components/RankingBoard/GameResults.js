@@ -98,7 +98,7 @@ export default class RankingBoard extends Component {
             }
         })
         if (isSamePlayer) {
-            message.warning('You have player in both team');
+            message.warning('Same player selected, please choose a differernt player');
             return
         }
         else {

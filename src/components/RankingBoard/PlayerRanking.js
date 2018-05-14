@@ -134,9 +134,9 @@ export default class PlayerRanking extends Component {
             }
         })
         return <div>
-            <h3> Total Played: {this.getCountUpAnimation(totalPlayedTime, 0)}times</h3>
-            <h4>Won: {this.getCountUpAnimation(wonTimes, 0)} time</h4>
-            <h4>lost: {this.getCountUpAnimation(loseTimes, 0)} time</h4>
+            <h3> Total Played: {this.getCountUpAnimation(totalPlayedTime, 0)} times</h3>
+            <h4>Won: {this.getCountUpAnimation(wonTimes, 0)} </h4>
+            <h4>lost: {this.getCountUpAnimation(loseTimes, 0)} </h4>
         </div>
     }
 
