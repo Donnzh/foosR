@@ -1,9 +1,12 @@
 {
   "name": "react-redux-starter-kit",
   "version": "3.0.1",
+  "homepage": "http://donnzh.github.io/foosR",
   "description": "Get started with React, Redux, and React-Router!",
   "main": "index.js",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "clean": "rimraf dist",
     "compile": "node build/scripts/compile",
     "build": "npm run clean && cross-env NODE_ENV=production npm run compile",
