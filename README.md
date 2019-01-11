@@ -1,6 +1,6 @@
  #A FOOSBALL RANKINGS RECORD APP
 
-https://foors-ranking.herokuapp.com/#/
+https://foors-ranking.herokuapp.com
 
  - React Redux Starter Kit
  - Ants design
